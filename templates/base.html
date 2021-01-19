@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.css">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-light bg-info justify-content-between ">
+        <div class="container">
+            <ul class="nav navbar-nav flex-row float-right">
+                {% if session['username'] %}
+                <li class="nav-item">
+                    <a class="nav-link pr-3 text-light" href="/user/{{session['username']}}">{{session['username']}}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link pr-3 text-light" href="/logout">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link pr-3 text-light" href="/login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="/register">Sign up</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <div class="container" style="margin-top: 2em">
+        {% for category, msg in get_flashed_messages(with_categories=True) %}
+            <div class="alert alert-{{category}}">{{ msg }}</div>
+        {% endfor %}
+    {% block content %}{% endblock %}
+</body>
+
+</html>
